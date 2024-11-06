@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("role") === "admin";
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -24,9 +26,6 @@ const Navbar = () => {
               <Link to={"/create"} className="mr-4">
                 Create Blog
               </Link>
-              <Link to={"/admin"} className="mr-4">
-                Admin Panel
-              </Link>
               <button onClick={handleLogout} className="text-red-500">
                 Logout
               </button>
@@ -38,6 +37,12 @@ const Navbar = () => {
               </Link>
               <Link to={"/register"}>Register</Link>
             </>
+          )}
+
+          {isAdmin && (
+            <Link to={"/admin"} className="ml-4">
+              Admin Panel
+            </Link>
           )}
         </div>
       </div>
